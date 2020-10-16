@@ -25,11 +25,20 @@ class App extends Component {
       })
   }
 
+  handleChange = (event) => {
+    this.setState({textField: event.target.value})
+  }
+
   render() {
+
+    const filtered = this.state.books.filter(book => {
+      return book.title.toLowerCase().includes(this.state.textField.toLowerCase());
+    })
+
     return (
       <div className={classes.App}>
-        <SearchBar />
-        <BookList allBooks={this.state.books}/>
+        <SearchBar change={this.handleChange}/>
+        <BookList allBooks={filtered}/>
       </div>
     );
   }
