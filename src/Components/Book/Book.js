@@ -1,9 +1,10 @@
 import React from 'react';
+import classes from './Book.module.css';
 
 const Book = () => {
     return(
         <div>
-            <li>Book title</li>
+            <li className={classes.title}>Book title</li>
         </div>
     );
 };
