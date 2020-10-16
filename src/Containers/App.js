@@ -10,7 +10,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://www.googleapis.com/books/v1/volumes?q={search%20terms}')
+    axios.get('https://www.googleapis.com/books/v1/volumes?q={search%20terms}&maxResults=40')
       .then(res => {
         const booksList = res.data.items;
 
