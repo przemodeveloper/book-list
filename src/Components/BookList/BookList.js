@@ -1,9 +1,12 @@
 import React from 'react';
+import Book from '../Book/Book';
 
-const BookList = () => {
+const BookList = (props) => {
     return(
         <div>
-            <p>Book list</p>
+            {props.allBooks.map(element => {
+                return <Book title={element.title}/>
+            })}
         </div>
     );
 };

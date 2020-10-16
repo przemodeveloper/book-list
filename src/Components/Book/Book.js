@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from './Book.module.css';
 
-const Book = () => {
+const Book = (props) => {
     return(
         <div>
-            <li className={classes.title}>Book title</li>
+            <li className={classes.title}>{props.title}</li>
         </div>
     );
 };

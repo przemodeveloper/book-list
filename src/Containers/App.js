@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.module.css';
 import axios from 'axios';
+import BookList from '../Components/BookList/BookList';
 
 class App extends Component {
 
@@ -15,17 +16,18 @@ class App extends Component {
         const booksList = res.data.items;
 
         const mapped = booksList.map(book => {
-          return book.volumeInfo.title;
+          return book.volumeInfo;
         })
         
         this.setState({books: mapped})
+        console.log(this.state.books)
       })
   }
 
   render() {
     return (
       <div className={classes.App}>
-        <h1>Book list</h1>
+        <BookList allBooks={this.state.books}/>
       </div>
     );
   }
