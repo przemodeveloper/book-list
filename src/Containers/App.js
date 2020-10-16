@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './App.module.css';
 import axios from 'axios';
 import BookList from '../Components/BookList/BookList';
+import SearchBar from '../Components/SearchBar/SearchBar';
 
 class App extends Component {
 
@@ -27,6 +28,7 @@ class App extends Component {
   render() {
     return (
       <div className={classes.App}>
+        <SearchBar />
         <BookList allBooks={this.state.books}/>
       </div>
     );
