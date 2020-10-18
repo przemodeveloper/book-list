@@ -3,7 +3,7 @@ import Book from '../Book/Book';
 
 const BookList = (props) => {
 
-    const { allBooks, loading } = props;
+    const { allBooks } = props;
 
     return(
         <div>
@@ -11,9 +11,8 @@ const BookList = (props) => {
                 const link = element.previewLink;
                 let url = new URL(link);
                 let search_params = url.searchParams.get('id');
-                console.log(search_params)
                 return <div>
-                        <Book title={element.title} link={search_params}/>
+                        <Book key={search_params} title={element.title} link={search_params}/>
                     </div>
             })}
         </div>

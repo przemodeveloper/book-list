@@ -13,17 +13,22 @@ class ShowDetails extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://www.googleapis.com/books/v1/volumes?q={search%20terms}&maxResults=40')
+        axios.get(`https://www.googleapis.com/books/v1/volumes?q=${this.props.match.params.id}`)
           .then(res => {
             const booksList = res.data.items;
-            this.setState({listOfBooks: booksList})
 
-            const match = this.state.listOfBooks.find( item => item.id === String(this.props.match.params.id) );
+            const mapped = booksList.map(book => {
+                return book.volumeInfo;
+              })
+
+            this.setState({listOfBooks: mapped})
+
+            console.log(mapped[0].title)
 
             this.setState({
-                author: match.volumeInfo.authors, 
-                title: match.volumeInfo.title, 
-                publisher: match.volumeInfo.publisher})
+                author: mapped[0].authors, 
+                title: mapped[0].title, 
+                publisher: mapped[0].publisher})
           })
       }
     
@@ -33,11 +38,10 @@ class ShowDetails extends Component {
         const { title, author, publisher } = this.state;
 
         return(
-            <div>
-                <h1>{title}</h1>
-                <h2>{author}</h2>
-                <p>{publisher}</p>
-                
+            <div className="container">
+                <h1 className="my-5 text-primary text-center">{title}</h1>
+                <h3 className="my-5 text-primary text-center">{author}</h3>
+                <p className="my-5 text-primary text-center">{publisher}</p>
             </div>
         );
     };

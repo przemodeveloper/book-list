@@ -1,27 +1,20 @@
 import React, { Component } from 'react';
-import classes from './Home.module.css';
 import axios from 'axios';
 import BookList from '../BookList/BookList';
 import SearchBar from '../SearchBar/SearchBar';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-// import BootstrapTable from 'react-bootstrap-table-next';
-// import paginationFactory from 'react-bootstrap-table2-paginator';
-// import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+// import Pagination from '../Pagination/Pagination';
 
 class App extends Component {
 
   state = {
     books: [],
     textField: '',
-    loading: false,
-    currentPage: 1,
-    booksPerPage: 5,
+    // currentPage: 1,
+    // booksPerPage: 10,
   }
 
-  componentDidMount() {
-    this.setState({loading: true})
-    axios.get('https://www.googleapis.com/books/v1/volumes?q={search%20terms}&maxResults=40')
+  componentDidUpdate() {
+    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${this.state.textField}`)
       .then(res => {
         const booksList = res.data.items;
 
@@ -30,7 +23,7 @@ class App extends Component {
         })
 
         
-        this.setState({books: mapped, loading: false})
+        this.setState({books: mapped})
       })
   }
 
@@ -41,40 +34,40 @@ class App extends Component {
 
   render() {
 
-    const { currentPage, booksPerPage, loading } = this.state;
+    // const { currentPage, booksPerPage, books } = this.state;
 
-    const indexOfLastBook = currentPage * booksPerPage;
-    const indexOfFirstBook = indexOfLastBook - booksPerPage;
+    // const indexOfLastBook = currentPage * booksPerPage;
+    // const indexOfFirstBook = indexOfLastBook - booksPerPage;
     
     const filtered = this.state.books.filter(book => {
       return book.title.toLowerCase().includes(this.state.textField.toLowerCase());
     })
 
-    const currentBooks = filtered.slice(indexOfFirstBook, indexOfLastBook);
+    // const currentBooks = filtered.slice(indexOfFirstBook, indexOfLastBook);
 
-    // const options = {
-    //   placeholder: 'Enter book title...',
-    //   delay: 250,
+    // const paginate = (pageNumber) => {
+    //   this.setState({currentPage: pageNumber})
     // }
 
-    // const columns = [{
-    //   dataField: 'title',
-    //   filter: textFilter(options)
-    // }];
+    // const nextPage = () => {
+    //   this.setState({currentPage: currentPage + 1})
+    // }
 
+    // const previousPage = () => {
+    //   this.setState({currentPage: currentPage - 1})
+    // }
 
     return (
       <div className="container">
         <h1 className="my-5 text-primary text-center">Books</h1>
-        {/* <BootstrapTable
-          className={classes.list}
-          keyField='title' 
-          data={ this.state.books } 
-          columns={ columns }
-          filter={ filterFactory() } 
-          pagination={ paginationFactory() }/> */}
         <SearchBar change={this.handleChange}/>
-        <BookList allBooks={currentBooks} loading={loading}/>
+        <BookList allBooks={filtered} />
+        {/* <Pagination 
+          booksPerPage={booksPerPage} 
+          totalBooks={books.length} 
+          paginate={paginate} 
+          nextPage={nextPage} 
+          previousPage={previousPage}/> */}
       </div>
     );
   }
