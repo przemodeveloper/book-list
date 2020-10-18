@@ -14,9 +14,13 @@ class App extends Component {
   state = {
     books: [],
     textField: '',
+    loading: false,
+    currentPage: 1,
+    booksPerPage: 5,
   }
 
   componentDidMount() {
+    this.setState({loading: true})
     axios.get('https://www.googleapis.com/books/v1/volumes?q={search%20terms}&maxResults=40')
       .then(res => {
         const booksList = res.data.items;
@@ -24,8 +28,9 @@ class App extends Component {
         const mapped = booksList.map(book => {
           return book.volumeInfo;
         })
+
         
-        this.setState({books: mapped})
+        this.setState({books: mapped, loading: false})
       })
   }
 
@@ -35,10 +40,17 @@ class App extends Component {
   
 
   render() {
+
+    const { currentPage, booksPerPage, loading } = this.state;
+
+    const indexOfLastBook = currentPage * booksPerPage;
+    const indexOfFirstBook = indexOfLastBook - booksPerPage;
     
     const filtered = this.state.books.filter(book => {
       return book.title.toLowerCase().includes(this.state.textField.toLowerCase());
     })
+
+    const currentBooks = filtered.slice(indexOfFirstBook, indexOfLastBook);
 
     // const options = {
     //   placeholder: 'Enter book title...',
@@ -52,7 +64,8 @@ class App extends Component {
 
 
     return (
-      <div className={classes.App}>
+      <div className="container">
+        <h1 className="my-5 text-primary text-center">Books</h1>
         {/* <BootstrapTable
           className={classes.list}
           keyField='title' 
@@ -61,7 +74,7 @@ class App extends Component {
           filter={ filterFactory() } 
           pagination={ paginationFactory() }/> */}
         <SearchBar change={this.handleChange}/>
-        <BookList allBooks={filtered}/>
+        <BookList allBooks={currentBooks} loading={loading}/>
       </div>
     );
   }

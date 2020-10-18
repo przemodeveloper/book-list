@@ -29,11 +29,14 @@ class ShowDetails extends Component {
     
 
     render() {
+        
+        const { title, author, publisher } = this.state;
+
         return(
             <div>
-                <h1>{this.state.title}</h1>
-                <h2>{this.state.author}</h2>
-                <p>{this.state.publisher}</p>
+                <h1>{title}</h1>
+                <h2>{author}</h2>
+                <p>{publisher}</p>
                 
             </div>
         );
