@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-  
+import { PropTypes } from 'prop-types';
 
 const Book = (props) => {
 
@@ -15,5 +15,11 @@ const Book = (props) => {
         </div>
     );
 };
+
+
+Book.propTypes = {
+    link: PropTypes.string,
+    title: PropTypes.string,
+  };
 
 export default Book;

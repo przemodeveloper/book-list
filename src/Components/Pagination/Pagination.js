@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { PropTypes } from 'prop-types';
 
 const Pagination = (props) => {
 
@@ -20,7 +21,7 @@ const Pagination = (props) => {
                     </li>
                         {pageNumbers.map(number => {
                             return <li className="page-item" key={number}>
-                                <a onClick={() => paginate(number)} className="page-link">{number}</a>
+                                <a href="#" onClick={() => paginate(number)} className="page-link">{number}</a>
 
                             </li>
                         })}
@@ -33,5 +34,13 @@ const Pagination = (props) => {
         </div>
     );
 };
+
+Pagination.propTypes = {
+    booksPerPage: PropTypes.number,
+    totalBooks: PropTypes.number,
+    paginate: PropTypes.func,
+    nextPage: PropTypes.func,
+    previousPage: PropTypes.func
+  };
 
 export default Pagination;

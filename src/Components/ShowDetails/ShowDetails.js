@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router';
 
-
 class ShowDetails extends Component {
 
     state = {
@@ -26,15 +25,13 @@ class ShowDetails extends Component {
             console.log(mapped[0].title)
 
             this.setState({
-                author: mapped[0].authors, 
-                title: mapped[0].title, 
+                author: mapped[0].authors,
+                title: mapped[0].title,
                 publisher: mapped[0].publisher})
           })
       }
-    
 
     render() {
-        
         const { title, author, publisher } = this.state;
 
         return(
