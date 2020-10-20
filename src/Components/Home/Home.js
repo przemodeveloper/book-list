@@ -5,7 +5,6 @@ import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
 import ChangePagesRendered from '../ChangePagesRendered/ChangePagesRendered';
 
-
 class App extends Component {
 
   state = {
@@ -53,7 +52,6 @@ class App extends Component {
     }
   }
 
-
   render() {
     const { currentPage, booksPerPage, books, textField } = this.state;
 
@@ -79,11 +77,9 @@ class App extends Component {
       this.setState({currentPage: currentPage - 1})
     }
 
-
     return (
       <div className="container">
         <h1 className="my-5 text-primary text-center">Books</h1>
-        <ChangePagesRendered pages={this.handleClick}/>
         <SearchBar change={this.handleChange}/>
         <BookList allBooks={currentBooks} />
         <div className="container">
