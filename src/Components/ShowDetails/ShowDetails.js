@@ -1,38 +1,36 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router';
 
-class ShowDetails extends Component {
+const ShowDetails = (props) => {
 
-    state = {
+    const [books, setBooks] = useState({
         listOfBooks: [],
         author: [],
         title: [],
         publisher: [],
-    }
+    })
 
-    componentDidMount() {
-        axios.get(`https://www.googleapis.com/books/v1/volumes?q=${this.props.match.params.id}`)
-          .then(res => {
-            const booksList = res.data.items;
-
+    useEffect(() => {
+        async function fetchData() {
+            const result =  await axios(
+            `https://www.googleapis.com/books/v1/volumes?q=${props.match.params.id}`,
+            );
+            const booksList = result.data.items;
             const mapped = booksList.map(book => {
                 return book.volumeInfo;
-              })
-
-            this.setState({listOfBooks: mapped})
-
-            console.log(mapped[0].title)
-
-            this.setState({
+            })
+            setBooks({
+                listOfBooks: mapped,
                 author: mapped[0].authors,
                 title: mapped[0].title,
                 publisher: mapped[0].publisher})
-          })
-      }
+        }
 
-    render() {
-        const { title, author, publisher } = this.state;
+        fetchData();
+      }, [props.match.params.id]);
+
+        const { title, author, publisher } = books;
 
         return(
             <div className="container">
@@ -40,8 +38,7 @@ class ShowDetails extends Component {
                 <h3 className="my-5 text-primary text-center">{author}</h3>
                 <p className="my-5 text-primary text-center">{publisher}</p>
             </div>
-        );
-    };
+    );
 };
 
 export default withRouter(ShowDetails);
