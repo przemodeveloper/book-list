@@ -4,7 +4,6 @@ import BookList from '../BookList/BookList';
 import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
 import ChangePagesRendered from '../ChangePagesRendered/ChangePagesRendered';
-import './Home.css';
 
 
 class App extends Component {
@@ -38,6 +37,7 @@ class App extends Component {
   handleChange = (event) => {
     this.search(event.target.value);
     this.setState({textField: event.target.value})
+    console.log(this.state.books)
   }
 
   handleClick = (event) => {
@@ -82,7 +82,8 @@ class App extends Component {
 
     return (
       <div className="container">
-        <h1 className="my-5 text-primary text-center">Books</h1>        
+        <h1 className="my-5 text-primary text-center">Books</h1>
+        <ChangePagesRendered pages={this.handleClick}/>
         <SearchBar change={this.handleChange}/>
         <BookList allBooks={currentBooks} />
         <div className="container">

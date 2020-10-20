@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './SearchBar.module.css';
+import classes from './SearchBar.module.scss';
 import { PropTypes } from 'prop-types';
 
 const SearchBar = (props) => {

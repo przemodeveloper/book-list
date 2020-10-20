@@ -1,4 +1,5 @@
 import React from 'react';
+import './ChangePagesRendered.module.scss';
 
 const ChangePagesRendered = (props) => {
     return(
