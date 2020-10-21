@@ -33,7 +33,7 @@ class App extends Component {
 
   search = async value => {
     const res = await axios(
-      `https://www.googleapis.com/books/v1/volumes?q=${value}&maxResults=40`
+      `https://www.googleapis.com/books/v1/volumes?q=${value}&maxResults=40&orderBy=relevance`
     );
     const booksList = await res.data.items;
 
