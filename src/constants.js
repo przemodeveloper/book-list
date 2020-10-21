@@ -1,1 +1,5 @@
 export const CHANGE_TEXTFIELD = 'CHANGE_TEXTFIELD';
+export const CHANGE_PAGES = 'CHANGE_PAGES';
+export const NEXT_PAGE = 'NEXT_PAGE';
+export const PREVIOUS_PAGE = 'PREVIOUS_PAGE';
+export const PAGINATE = 'PAGINATE';

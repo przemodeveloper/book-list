@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import BookList from '../BookList/BookList';
 import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
 import ChangePagesRendered from '../ChangePagesRendered/ChangePagesRendered';
+import { setTextField, setPages, setNextPage, setPreviousPage, setPaginate } from '../../actions';
+
+const mapStateToProps = state => {
+  return {
+    textField: state.textField,
+    currentPage: state.currentPage,
+    booksPerPage: state.booksPerPage
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleChange: (event) => dispatch(setTextField(event.target.value)),
+    handleClick: (event) => dispatch(setPages(event.target.id)),
+    nextPage: () => dispatch(setNextPage()),
+    previousPage: () => dispatch(setPreviousPage()),
+    paginate: (number) => dispatch(setPaginate(number)),
+  }
+}
 
 class App extends Component {
 
   state = {
     books: [],
-    textField: '',
-    loading: false,
-    currentPage: 1,
-    booksPerPage: 10,
   }
 
   search = async value => {
-    this.setState({ loading: true });
     const res = await axios(
       `https://www.googleapis.com/books/v1/volumes?q=${value}&maxResults=40`
     );
@@ -28,32 +43,16 @@ class App extends Component {
 
     this.setState({
       books: mapped,
-      loading: false,
      });
   };
 
-
   handleChange = (event) => {
     this.search(event.target.value);
-    this.setState({textField: event.target.value})
-    console.log(this.state.books)
-  }
-
-  handleClick = (event) => {
-    const id = event.target.id;
-    if (Number(id) === 5) {
-      this.setState({booksPerPage: 5})
-    } else if(Number(id) === 10) {
-      this.setState({booksPerPage: 10})
-    } else if (Number(id) === 15) {
-      this.setState({booksPerPage: 15})
-    } else if (Number(id) === 20) {
-      this.setState({booksPerPage: 20})
-    }
   }
 
   render() {
-    const { currentPage, booksPerPage, books, textField } = this.state;
+    const { books } = this.state;
+    const { textField, currentPage, booksPerPage, handleClick, nextPage, previousPage, paginate } = this.props;
 
     const indexOfLastBook = currentPage * booksPerPage;
     const indexOfFirstBook = indexOfLastBook - booksPerPage;
@@ -63,19 +62,7 @@ class App extends Component {
       return book.title.toLowerCase().includes(textField.toLowerCase());
     })
 
-     const currentBooks = filtered.slice(indexOfFirstBook, indexOfLastBook);
-
-    const paginate = (pageNumber) => {
-      this.setState({currentPage: pageNumber})
-    }
-
-    const nextPage = () => {
-      this.setState({currentPage: currentPage + 1})
-    }
-
-    const previousPage = () => {
-      this.setState({currentPage: currentPage - 1})
-    }
+    const currentBooks = filtered.slice(indexOfFirstBook, indexOfLastBook);
 
     return (
       <div className="container">
@@ -89,11 +76,11 @@ class App extends Component {
             paginate={paginate}
             nextPage={nextPage}
             previousPage={previousPage}/>
-            <ChangePagesRendered pages={this.handleClick}/>
+            <ChangePagesRendered pages={handleClick}/>
         </div>
       </div>
     );
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
