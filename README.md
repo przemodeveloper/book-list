@@ -1,10 +1,16 @@
+## Title
+Book App
+
 ## Description
-This app allows to search for books by name within Google Library. It was written with React and Redux package.
+This app allows to search for books by name within Google Library, displays paginated entries and gives an opportunity to check details of each book.
 
-## Running
-To run an app, in the project directory, type in the console 'npm start' or 'yarn start'.
+## Project status
+Completed
 
-## Building
-To build an app, in the project directory, type in the console 'npm run-script build'.
+## Technology
+React, Redux
 
-
+## Launch
+1. clone repository
+2. npm install
+3. npm start / yarn start
